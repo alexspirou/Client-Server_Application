@@ -1,0 +1,4 @@
+﻿  MyForm.cpp
+D:\repos\TCPClientApplication\TCPClientApplication\MyForm.cpp(8,36): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+  CSocket.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  TCPClientApplication.vcxproj -> D:\repos\TCPClientApplication\Debug\TCPClientApplication.exe

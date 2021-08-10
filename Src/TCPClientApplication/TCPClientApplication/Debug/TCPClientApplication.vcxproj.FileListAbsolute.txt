@@ -1,0 +1,3 @@
+D:\repos\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.AssemblyReference.cache
+D:\repos\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.MyForm.resources
+D:\repos\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.GenerateResource.cache

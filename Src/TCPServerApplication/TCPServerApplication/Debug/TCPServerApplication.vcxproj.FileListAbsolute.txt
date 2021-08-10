@@ -1,0 +1,3 @@
+D:\repos\TCPServerApplication\TCPServerApplication\Debug\TCPServerApplication.vcxproj.AssemblyReference.cache
+D:\repos\TCPServerApplication\TCPServerApplication\Debug\TCPServerApplication.MyForm.resources
+D:\repos\TCPServerApplication\TCPServerApplication\Debug\TCPServerApplication.vcxproj.GenerateResource.cache
