@@ -30,8 +30,10 @@ void CSocket::init()
    // cout << "TCP Client Socket Creation Success" << endl;
 
     // STEP-3 Fill Server Structure
+
+
     TCPServerAdd.sin_family = AF_INET;
-    TCPServerAdd.sin_addr.s_addr = inet_addr("127.0.0.1");
+    TCPServerAdd.sin_addr.s_addr = inet_addr(m_ServerIP);
     TCPServerAdd.sin_port = htons(8000);
 
     // STEP-4 Connect Fun

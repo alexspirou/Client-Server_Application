@@ -43,6 +43,12 @@ namespace TCPClientApplication {
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ buttonUpdateClientsInfo;
 	private: System::Windows::Forms::Label^ labelShowName;
+
+	private: System::Windows::Forms::Label^ labelForIP;
+	private: System::Windows::Forms::TextBox^ textBoxIP;
+
+
+
 	public:
 	public:
 		int timer = 0;
@@ -99,6 +105,8 @@ namespace TCPClientApplication {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->buttonUpdateClientsInfo = (gcnew System::Windows::Forms::Button());
 			this->labelShowName = (gcnew System::Windows::Forms::Label());
+			this->labelForIP = (gcnew System::Windows::Forms::Label());
+			this->textBoxIP = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// msgPanelShow
@@ -131,7 +139,7 @@ namespace TCPClientApplication {
 			// 
 			// buttonInit
 			// 
-			this->buttonInit->Location = System::Drawing::Point(575, 178);
+			this->buttonInit->Location = System::Drawing::Point(572, 181);
 			this->buttonInit->Name = L"buttonInit";
 			this->buttonInit->RightToLeft = System::Windows::Forms::RightToLeft::No;
 			this->buttonInit->Size = System::Drawing::Size(117, 26);
@@ -142,7 +150,7 @@ namespace TCPClientApplication {
 			// 
 			// buttonClear
 			// 
-			this->buttonClear->Location = System::Drawing::Point(575, 210);
+			this->buttonClear->Location = System::Drawing::Point(572, 213);
 			this->buttonClear->Name = L"buttonClear";
 			this->buttonClear->Size = System::Drawing::Size(117, 26);
 			this->buttonClear->TabIndex = 5;
@@ -188,16 +196,35 @@ namespace TCPClientApplication {
 			// labelShowName
 			// 
 			this->labelShowName->AutoSize = true;
-			this->labelShowName->Location = System::Drawing::Point(578, 118);
+			this->labelShowName->Location = System::Drawing::Point(575, 98);
 			this->labelShowName->Name = L"labelShowName";
 			this->labelShowName->Size = System::Drawing::Size(0, 17);
+			this->labelShowName->Text = "Name : ";
 			this->labelShowName->TabIndex = 9;
+			// 
+			// labelForIP
+			// 
+			this->labelForIP->AutoSize = true;
+			this->labelForIP->Location = System::Drawing::Point(572, 132);
+			this->labelForIP->Name = L"labelForIP";
+			this->labelForIP->Size = System::Drawing::Size(114, 17);
+			this->labelForIP->TabIndex = 11;
+			this->labelForIP->Text = L"Enter Server\'s IP";
+			// 
+			// textBoxIP
+			// 
+			this->textBoxIP->Location = System::Drawing::Point(572, 152);
+			this->textBoxIP->Name = L"textBoxIP";
+			this->textBoxIP->Size = System::Drawing::Size(117, 22);
+			this->textBoxIP->TabIndex = 12;
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(697, 556);
+			this->Controls->Add(this->textBoxIP);
+			this->Controls->Add(this->labelForIP);
 			this->Controls->Add(this->labelShowName);
 			this->Controls->Add(this->buttonUpdateClientsInfo);
 			this->Controls->Add(this->label1);
@@ -227,6 +254,9 @@ namespace TCPClientApplication {
 	}
 	private: System::Void buttonInit_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
+		cs.setIP(textBoxIP->Text);
+		//textBoxIP->Text = "";
+		textBoxIP->ReadOnly = true;
 		System::Threading::Thread^ oThread = gcnew System::Threading::Thread(gcnew System::Threading::ThreadStart(&init));
 		oThread->Start();
 		oThread->EndThreadAffinity();
@@ -279,8 +309,10 @@ namespace TCPClientApplication {
 	private: System::Void buttonUpdateClientsInfo_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
 		cs.setName(NameTextBox->Text);
-		labelShowName->Text = NameTextBox->Text;
+		labelShowName->Text += NameTextBox->Text;
 		NameTextBox->Text = "";
+
+
 	}
 };
 }

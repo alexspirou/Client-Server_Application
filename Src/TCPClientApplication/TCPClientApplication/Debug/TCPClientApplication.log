@@ -1,4 +1,5 @@
 ﻿  MyForm.cpp
-D:\repos\TCPClientApplication\TCPClientApplication\MyForm.cpp(8,36): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\TCPClientApplication\CSocket.h(28,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\TCPClientApplication\MyForm.cpp(8,36): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
   CSocket.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  TCPClientApplication.vcxproj -> D:\repos\TCPClientApplication\Debug\TCPClientApplication.exe
+  TCPClientApplication.vcxproj -> C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\Debug\TCPClientApplication.exe

@@ -64,6 +64,7 @@ namespace TCPServerApplication
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ buttonUpdateInfo;
 	private: System::Windows::Forms::Label^ labelShowName;
+	private: System::Windows::Forms::ContextMenuStrip^ contextMenuStrip1;
 
 	private: System::ComponentModel::IContainer^ components;
 	protected:
@@ -92,6 +93,7 @@ namespace TCPServerApplication
 			this->textBoxName = (gcnew System::Windows::Forms::TextBox());
 			this->buttonUpdateInfo = (gcnew System::Windows::Forms::Button());
 			this->labelShowName = (gcnew System::Windows::Forms::Label());
+			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->SuspendLayout();
 			// 
 			// msgPanelShow
@@ -164,6 +166,12 @@ namespace TCPServerApplication
 			this->labelShowName->Name = L"labelShowName";
 			this->labelShowName->Size = System::Drawing::Size(0, 17);
 			this->labelShowName->TabIndex = 9;
+			// 
+			// contextMenuStrip1
+			// 
+			this->contextMenuStrip1->ImageScalingSize = System::Drawing::Size(20, 20);
+			this->contextMenuStrip1->Name = L"contextMenuStrip1";
+			this->contextMenuStrip1->Size = System::Drawing::Size(61, 4);
 			// 
 			// MyForm
 			// 

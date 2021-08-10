@@ -1,4 +1,9 @@
-﻿  MyForm.cpp
-D:\repos\TCPServerApplication\TCPServerApplication\MyForm.cpp(10,1): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+﻿  CSocket.cpp
+C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPServerApplication\TCPServerApplication\CSocket.cpp(9,6): warning C4101: 'iWasCleanup': unreferenced local variable
+C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPServerApplication\TCPServerApplication\CSocket.cpp(86,20): warning C4018: '<': signed/unsigned mismatch
+  MyForm.cpp
+C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPServerApplication\TCPServerApplication\MyForm.cpp(10,1): warning C4829: Possibly incorrect parameters to function main. Consider 'int main(Platform::Array<Platform::String^>^ argv)'
+  .NETFramework,Version=v4.7.2.AssemblyAttributes.cpp
+  Generating Code...
   CSocket.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
-  TCPServerApplication.vcxproj -> D:\repos\TCPServerApplication\Debug\TCPServerApplication.exe
+  TCPServerApplication.vcxproj -> C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPServerApplication\Debug\TCPServerApplication.exe
