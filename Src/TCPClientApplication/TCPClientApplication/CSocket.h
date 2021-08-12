@@ -32,7 +32,7 @@ private:
 
 	SOCKET m_TCPClientSocket;
 	int    m_iWsaStartup;
-	std::string m_ClientName{ "Alex" };
+	std::string m_ClientName{ "Client" };
 	char m_ServerIP[200];
 
 	int m_test;

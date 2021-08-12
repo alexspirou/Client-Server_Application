@@ -23,7 +23,7 @@ void CSocket::init()
 
 	//Fill the struct
 	TCPServerAdd.sin_family = AF_INET;
-	TCPServerAdd.sin_addr.s_addr = inet_addr("127.0.0.1");
+	TCPServerAdd.sin_addr.s_addr = inet_addr(m_ServerIP);
 	TCPServerAdd.sin_port = htons(8000);
 
 	//Step 3 Socket Creation
@@ -56,7 +56,7 @@ void CSocket::init()
 	//Send data
 
 	int iSend{};
-	char SenderBuffer[512] = "***geia sou re malaka, ti kaneis re arxidi***";
+	char SenderBuffer[512] = "\n***INIT MESSAGE FROM SERVER***";
 	int iSenderBuffer = sizeof(SenderBuffer) + 1;
 
 	iSend = send(m_sAcceptSocket, SenderBuffer, iSenderBuffer, 0);
@@ -80,8 +80,7 @@ void CSocket::sendData(System::String^ s_msg)
 	int iSenderBuffer = sizeof(SenderBuffer) + 1;
 	std::string msg = msclr::interop::marshal_as<std::string>(s_msg);
 	
-	//std::cout << "You : ";
-
+	msg = "\n" +m_serverName + " : " + msg;
 	memset(SenderBuffer, 0, sizeof SenderBuffer);
 	for (int i = 0; i < msg.size(); i++)
 		SenderBuffer[i] = msg[i];

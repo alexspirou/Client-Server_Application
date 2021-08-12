@@ -19,3 +19,4 @@ Class TCPClientApplication.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeF
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
     Int32 timer : Public
+    Boolean isConnect : Public

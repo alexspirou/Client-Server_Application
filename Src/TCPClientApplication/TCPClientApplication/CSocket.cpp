@@ -48,7 +48,6 @@ void CSocket::init()
     }
     //cout << "Connection Success" << endl;
 
-    // STEP-5 RECV Data From Server Side
 
 }
 
@@ -59,8 +58,10 @@ int CSocket::sendData(System::String^& s_msg)
     int iSenderBuffer = sizeof(SenderBuffer) + 1;
     int iSend{};
 
-    std::string msg = msclr::interop::marshal_as<std::string>(s_msg);
-    msg = m_ClientName + " : " + msg;
+
+    std::string msg  = systemStringToString(s_msg);
+
+    msg = m_ClientName + " : " + msg + "\n";
     memset(SenderBuffer, 0, sizeof SenderBuffer);
 
     for (int i = 0; i < msg.size(); i++)
@@ -121,8 +122,8 @@ void CSocket::clean()
     iWsaCleanup = WSACleanup();
     if (iWsaCleanup == SOCKET_ERROR)
     {
-        cout << "CleanUp Fun Failed " << endl;
-        cout << "Error No-> " << WSAGetLastError() << endl;
+        //cout << "CleanUp Fun Failed " << endl;
+        //cout << "Error No-> " << WSAGetLastError() << endl;
     }
     //cout << "CleanUp Fun Success" << endl;
 

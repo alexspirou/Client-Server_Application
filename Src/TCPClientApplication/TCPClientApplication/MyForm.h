@@ -1,15 +1,8 @@
 #pragma once
 #include "CSocket.h"
-CSocket cs;
-int timer = 0;
-void init()
-{
-	cs.init();
 
-
-}
-
-
+CSocket soc;
+void init(){ soc.init(); } //Function for thread
 
 namespace TCPClientApplication {
 
@@ -27,10 +20,11 @@ namespace TCPClientApplication {
 	{
 
 	public:
-
+		int timer = 0;
+		bool isConnect = false;
 		MyForm(void)
 		{
-
+			
 			InitializeComponent();
 			//
 			//TODO: Add the constructor code here
@@ -42,16 +36,18 @@ namespace TCPClientApplication {
 
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Button^ buttonUpdateClientsInfo;
-	private: System::Windows::Forms::Label^ labelShowName;
+
 
 	private: System::Windows::Forms::Label^ labelForIP;
+	private: System::Windows::Forms::Button^ buttonClearMessages;
+
 	private: System::Windows::Forms::TextBox^ textBoxIP;
 
 
 
 	public:
 	public:
-		int timer = 0;
+		
 
 	protected:
 		/// <summary>
@@ -67,9 +63,11 @@ namespace TCPClientApplication {
 	private: System::Windows::Forms::RichTextBox^ msgPanelShow;
 	private: System::Windows::Forms::RichTextBox^ msgSendBox;
 	private: System::Windows::Forms::Button^ buttonSend;
-	private: System::Windows::Forms::Button^ buttonInit;
+	private: System::Windows::Forms::Button^ buttonConnect;
 
-	private: System::Windows::Forms::Button^ buttonClear;
+	private: System::Windows::Forms::Button^ buttonDisconnect;
+
+
 	private: System::Windows::Forms::Timer^ timer1;
 	private: System::ComponentModel::IContainer^ components;
 
@@ -97,16 +95,16 @@ namespace TCPClientApplication {
 			this->msgPanelShow = (gcnew System::Windows::Forms::RichTextBox());
 			this->msgSendBox = (gcnew System::Windows::Forms::RichTextBox());
 			this->buttonSend = (gcnew System::Windows::Forms::Button());
-			this->buttonInit = (gcnew System::Windows::Forms::Button());
-			this->buttonClear = (gcnew System::Windows::Forms::Button());
+			this->buttonConnect = (gcnew System::Windows::Forms::Button());
+			this->buttonDisconnect = (gcnew System::Windows::Forms::Button());
 			this->timer1 = (gcnew System::Windows::Forms::Timer(this->components));
 			this->backgroundWorker1 = (gcnew System::ComponentModel::BackgroundWorker());
 			this->NameTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->buttonUpdateClientsInfo = (gcnew System::Windows::Forms::Button());
-			this->labelShowName = (gcnew System::Windows::Forms::Label());
 			this->labelForIP = (gcnew System::Windows::Forms::Label());
 			this->textBoxIP = (gcnew System::Windows::Forms::TextBox());
+			this->buttonClearMessages = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// msgPanelShow
@@ -126,6 +124,7 @@ namespace TCPClientApplication {
 			this->msgSendBox->Size = System::Drawing::Size(557, 66);
 			this->msgSendBox->TabIndex = 1;
 			this->msgSendBox->Text = L"";
+			this->msgSendBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::msgSendBox_KeyDown);
 			// 
 			// buttonSend
 			// 
@@ -137,26 +136,26 @@ namespace TCPClientApplication {
 			this->buttonSend->UseVisualStyleBackColor = true;
 			this->buttonSend->Click += gcnew System::EventHandler(this, &MyForm::buttonSendClick);
 			// 
-			// buttonInit
+			// buttonConnect
 			// 
-			this->buttonInit->Location = System::Drawing::Point(572, 181);
-			this->buttonInit->Name = L"buttonInit";
-			this->buttonInit->RightToLeft = System::Windows::Forms::RightToLeft::No;
-			this->buttonInit->Size = System::Drawing::Size(117, 26);
-			this->buttonInit->TabIndex = 3;
-			this->buttonInit->Text = L"Init";
-			this->buttonInit->UseVisualStyleBackColor = true;
-			this->buttonInit->Click += gcnew System::EventHandler(this, &MyForm::buttonInit_Click);
+			this->buttonConnect->Location = System::Drawing::Point(572, 181);
+			this->buttonConnect->Name = L"buttonConnect";
+			this->buttonConnect->RightToLeft = System::Windows::Forms::RightToLeft::No;
+			this->buttonConnect->Size = System::Drawing::Size(117, 26);
+			this->buttonConnect->TabIndex = 3;
+			this->buttonConnect->Text = L"Connect";
+			this->buttonConnect->UseVisualStyleBackColor = true;
+			this->buttonConnect->Click += gcnew System::EventHandler(this, &MyForm::buttonConnect_Click);
 			// 
-			// buttonClear
+			// buttonDisconnect
 			// 
-			this->buttonClear->Location = System::Drawing::Point(572, 213);
-			this->buttonClear->Name = L"buttonClear";
-			this->buttonClear->Size = System::Drawing::Size(117, 26);
-			this->buttonClear->TabIndex = 5;
-			this->buttonClear->Text = L"Clear";
-			this->buttonClear->UseVisualStyleBackColor = true;
-			this->buttonClear->Click += gcnew System::EventHandler(this, &MyForm::buttonClear_Click);
+			this->buttonDisconnect->Location = System::Drawing::Point(572, 213);
+			this->buttonDisconnect->Name = L"buttonDisconnect";
+			this->buttonDisconnect->Size = System::Drawing::Size(117, 26);
+			this->buttonDisconnect->TabIndex = 5;
+			this->buttonDisconnect->Text = L"Disconnect";
+			this->buttonDisconnect->UseVisualStyleBackColor = true;
+			this->buttonDisconnect->Click += gcnew System::EventHandler(this, &MyForm::buttonDisconnect_Click);
 			// 
 			// timer1
 			// 
@@ -173,6 +172,7 @@ namespace TCPClientApplication {
 			this->NameTextBox->Name = L"NameTextBox";
 			this->NameTextBox->Size = System::Drawing::Size(117, 22);
 			this->NameTextBox->TabIndex = 6;
+			this->NameTextBox->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::NameTextBox_KeyDown);
 			// 
 			// label1
 			// 
@@ -193,15 +193,6 @@ namespace TCPClientApplication {
 			this->buttonUpdateClientsInfo->UseVisualStyleBackColor = true;
 			this->buttonUpdateClientsInfo->Click += gcnew System::EventHandler(this, &MyForm::buttonUpdateClientsInfo_Click);
 			// 
-			// labelShowName
-			// 
-			this->labelShowName->AutoSize = true;
-			this->labelShowName->Location = System::Drawing::Point(575, 98);
-			this->labelShowName->Name = L"labelShowName";
-			this->labelShowName->Size = System::Drawing::Size(0, 17);
-			this->labelShowName->Text = "Name : ";
-			this->labelShowName->TabIndex = 9;
-			// 
 			// labelForIP
 			// 
 			this->labelForIP->AutoSize = true;
@@ -217,25 +208,40 @@ namespace TCPClientApplication {
 			this->textBoxIP->Name = L"textBoxIP";
 			this->textBoxIP->Size = System::Drawing::Size(117, 22);
 			this->textBoxIP->TabIndex = 12;
+			this->textBoxIP->Text = L"127.0.0.1";
+			// 
+			// buttonClearMessages
+			// 
+			this->buttonClearMessages->Location = System::Drawing::Point(572, 245);
+			this->buttonClearMessages->Name = L"buttonClearMessages";
+			this->buttonClearMessages->Size = System::Drawing::Size(117, 26);
+			this->buttonClearMessages->TabIndex = 13;
+			this->buttonClearMessages->Text = L"Clear Messages";
+			this->buttonClearMessages->UseVisualStyleBackColor = true;
+			this->buttonClearMessages->Click += gcnew System::EventHandler(this, &MyForm::buttonClearMessages_Click);
 			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoSize = true;
 			this->ClientSize = System::Drawing::Size(697, 556);
+			this->Controls->Add(this->buttonClearMessages);
 			this->Controls->Add(this->textBoxIP);
 			this->Controls->Add(this->labelForIP);
-			this->Controls->Add(this->labelShowName);
 			this->Controls->Add(this->buttonUpdateClientsInfo);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->NameTextBox);
-			this->Controls->Add(this->buttonClear);
-			this->Controls->Add(this->buttonInit);
+			this->Controls->Add(this->buttonDisconnect);
+			this->Controls->Add(this->buttonConnect);
 			this->Controls->Add(this->buttonSend);
 			this->Controls->Add(this->msgSendBox);
 			this->Controls->Add(this->msgPanelShow);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->KeyPreview = true;
 			this->Name = L"MyForm";
 			this->Text = L"Client";
+			this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm::MyForm_KeyDown);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -244,49 +250,44 @@ namespace TCPClientApplication {
 
 	private: System::Void buttonSendClick(System::Object^ sender, System::EventArgs^ e)
 	{
-		System::String^ s = msgSendBox->Text;
-		cs.sendData(s);
-		msgPanelShow->Text = msgPanelShow->Text + "\nMe : " + s + "\n";
-		msgSendBox->Text = "";
+		if (!msgPanelShow->Text->Empty && isConnect)
+		{
+			System::String^ s = msgSendBox->Text;
+			soc.sendData(s);
+			msgPanelShow->Text = msgPanelShow->Text + "\nMe : " + s;
 
+			msgSendBox->Text = "";
+		}
+		if (!isConnect)
+		{
+			MessageBox::Show("There Is No Connection With Server", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
 
-
+		}
 	}
-	private: System::Void buttonInit_Click(System::Object^ sender, System::EventArgs^ e) 
+	private: System::Void buttonConnect_Click(System::Object^ sender, System::EventArgs^ e)
 	{
-		cs.setIP(textBoxIP->Text);
-		//textBoxIP->Text = "";
+		soc.setIP(textBoxIP->Text);
 		textBoxIP->ReadOnly = true;
 		System::Threading::Thread^ oThread = gcnew System::Threading::Thread(gcnew System::Threading::ThreadStart(&init));
 		oThread->Start();
 		oThread->EndThreadAffinity();
-		System::String^ s;
-		//cs.receiveData(s);
-		msgPanelShow->Text = s;
+		System::String^ s = "***INIT MESSAGE FROM CLIENT***";
+		soc.sendData(s);
+		buttonConnect->Enabled = false;
 	}
-	private: System::Void buttonClear_Click(System::Object^ sender, System::EventArgs^ e) 
+	private: System::Void buttonDisconnect_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
-		cs.clean();
+		soc.clean();
+		buttonConnect->Enabled = true;
+		textBoxIP->ReadOnly = false;
+
 	}
-	private: System::Void buttonRead_Click(System::Object^ sender, System::EventArgs^ e)
-	{
-		
-		//System::String^ s;
-		//if(cs.receiveData(s) <= 0) msgPanelShow->Text = "NOT RECEIVE DATA";
-		//else { msgPanelShow->Text = msgPanelShow->Text + "\n" + "Server : " + s; }
-		//
-	}
+
 	private: System::Void timer1_Tick(System::Object^ sender, System::EventArgs^ e)
 	{
 
-		timer++;
-		if (timer == 2)
-		{
-			if(!backgroundWorker1->IsBusy)
-				backgroundWorker1->RunWorkerAsync();
-			timer = 0;
-		}
-		
+		if(!backgroundWorker1->IsBusy)
+			backgroundWorker1->RunWorkerAsync();		
 	}
 	private: System::Void backgroundWorker1_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) 
 	{
@@ -294,25 +295,94 @@ namespace TCPClientApplication {
 
 
 		int receivedData;
-		System::String^ msg = cs.receiveData(receivedData);
+		System::String^ msg = soc.receiveData(receivedData);
 		if (receivedData <= 0)
 		{
+			isConnect = false;
 
 		}
 		else
 		{
-			msgPanelShow->Text = msgPanelShow->Text + "Server : " + msg;
+			isConnect = true;
+			msgPanelShow->Text += msg;
+			System::Media::SoundPlayer^ player = gcnew System::Media::SoundPlayer();
+			player->SoundLocation = "Sounds\\messageSound.wav";
+			player->Load();
+			player->PlaySync();
 			backgroundWorker1->CancelAsync();
 		}
 	}
 
 	private: System::Void buttonUpdateClientsInfo_Click(System::Object^ sender, System::EventArgs^ e) 
 	{
-		cs.setName(NameTextBox->Text);
-		labelShowName->Text += NameTextBox->Text;
-		NameTextBox->Text = "";
+		soc.setName(NameTextBox->Text);
+		NameTextBox->Enabled = false;
 
 
 	}
+
+
+
+	private: System::Void MyForm_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) 
+		{
+			
+
+		}
+	private: System::Void NameTextBox_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e)
+	{
+
+
+		if (e->KeyCode == Keys::Enter && !e->Shift && e->KeyCode == Keys::Enter)
+		{
+
+			if (NameTextBox->Text != "")
+			{
+				soc.setName(NameTextBox->Text);
+				NameTextBox->Enabled = false;
+			}
+			
+			if (NameTextBox->Text->Length == 0)
+			{
+				//System::Media::SystemSounds^  player = gcnew System::Media::SystemSounds();
+				//player->Beep->Play();
+				MessageBox::Show("The User Name Must Be Less Than 10 Characters", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+			}
+
+
+
+		}
+	}
+	private: System::Void msgSendBox_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e)
+		{
+			if (e->KeyCode == Keys::Enter && !e->Shift && e->KeyCode == Keys::Enter )
+			{
+				if (msgSendBox->Text!= "" && isConnect)
+				{
+					msgSendBox->ReadOnly = true;
+					System::String^ s = msgSendBox->Text;
+					soc.sendData(s);
+					msgPanelShow->Text = msgPanelShow->Text + "\nMe : " + s;
+					msgSendBox->Text = "";
+				}
+				if (!isConnect)
+				{
+					MessageBox::Show("There Is No Connection With Server", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Warning);
+
+				}
+			}
+			else
+			{
+
+				msgSendBox->ReadOnly = false;
+			}
+
+		}
+
+
+	private: System::Void buttonClearMessages_Click(System::Object^ sender, System::EventArgs^ e) 
+	{
+		msgPanelShow->Text = "";
+	}
+
 };
 }

@@ -1,6 +1,6 @@
 D:\repos\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.AssemblyReference.cache
 D:\repos\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.MyForm.resources
 D:\repos\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.GenerateResource.cache
-C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.AssemblyReference.cache
 C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.MyForm.resources
 C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.GenerateResource.cache
+C:\Users\Alex\Desktop\Client-Server_Application\Src\TCPClientApplication\TCPClientApplication\Debug\TCPClientApplication.vcxproj.AssemblyReference.cache
